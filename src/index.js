@@ -1,27 +1,20 @@
-#!/usr/bin/env node
-
 const path = require('path');
 
-const args = require('yargs').argv;
 const notifier = require('node-notifier');
-const log = require('log');
-const util = require('js-util');
-const fsExtended = require('fs-extended');
-const Config = require('config');
+const { randFromArr } = require('./utils');
 
 const wallpaperDir = path.resolve('./wallpapers');
 const savedWallpaperDir = path.resolve('./savedWallpapers');
 
-var config = new Config(path.resolve('./config.json'), {
-	subreddits: [''],
-	blacklist: []
-});
+// var config = new Config(path.resolve('./config.json'), {
+// 	subreddits: [''],
+// 	blacklist: []
+// });
 
 //get list of pre-existing files
 	//use this list as the base for the next wallpapers list
 	//reset this list only if a special flag is passed (essentially every reboot)
 
-log(args);
 
 function notify(title, message){
 	notifier.notify({
@@ -32,7 +25,7 @@ function notify(title, message){
 
 function getWallpapers(count = 3, subreddit, keepGoing){
 	if(!subreddit){
-		subreddit = util.randFromArr(config.subreddits);
+		subreddit = randFromArr(config.subreddits);
 
 		keepGoing = true;
 	}
